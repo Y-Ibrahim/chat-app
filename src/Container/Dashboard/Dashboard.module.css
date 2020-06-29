@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow: hidden;
+  
 }
 
 .Header {
@@ -29,6 +29,7 @@
   display: flex;
   flex-direction: column;
   background: #36393E;
+  
 }
   
  .DialogBox {
@@ -39,10 +40,11 @@
 
 
  .MessageInputBox {
-  height: 60px;
-  margin-bottom: 20px;
+  
+  color: #d3d3d3;
   background: #36393E;
-   
+  justify-content: center;
+  display: flex;
  }
 
  .PageHeader {
@@ -56,22 +58,22 @@
     }
 
 .TextArea {
-       border: 2px solid #d3d3d3;
-        background: #424549;
-        margin-top: -10px;
+       display: inline-block;
+      color: #fff;
+      background: #424549;
+
 }
 
 .button {
-    width: 100%;
-    margin: 5px 0px 20px;
-    background: #7289DA;
-    color: black;
-    padding: 2px 3px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border: none;
-    border-radius: 4px;
+   display: inline-block;
+   background: #7289DA;
 }
     
+.title{
+  text-align: center;
+  font-weight: bold;
+     color: #d3d3d3;
+     font-size: 1.5rem;
+    text-decoration: underline;
+    margin-top: 5px;
+}
