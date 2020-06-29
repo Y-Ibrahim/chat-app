@@ -1,13 +1,17 @@
 import React, { useContext, useState } from "react";
-import styled from "styled-components";
-import {Input, Button } from "antd";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import classes from './Dashboard.module.css';
 import TopicList from "./TopicList/TopicList";
 import Dialog from "./Dialog/Dialog";
+import io from "socket.io-client";
+// import {user} from './Store';
+
 
 import { ctx } from "./Store";
 
-const { TextArea } = Input;
+
 
 // const Box = styled.div`
 //   display: flex;
@@ -55,10 +59,15 @@ function Dashboard() {
   const topics = Object.keys(allCharts);
   const [activeTopic, changeActiveTopic] = useState(topics[0]);
   const [textValue, setTextValue] = useState("");
-  console.log(allCharts)
+  console.log(textValue.length)
+  console.log(Object.keys(allCharts))
+  console.log(user);
+ 
 
+ if(textValue <= 0) {
 
-  
+ }
+
 
 
   return (
@@ -66,7 +75,9 @@ function Dashboard() {
      
       <div className={classes.Content}>
         <div className={classes.SideLeft}>
-          {/* <img src="https://w7.pngwing.com/pngs/179/462/png-transparent-black-power-button-logo-computer-icons-button-power-symbol-on-off-button-window-symbol-on-off-button-thumbnail.png" width="100px"/> */}
+          
+          <h3 className={classes.title}>Chat app</h3>
+          
           <TopicList {...{ topics, changeActiveTopic, activeTopic }} />
         </div>
         <div className={classes.SideRight}>
@@ -80,26 +91,63 @@ function Dashboard() {
             <Dialog list={allCharts[activeTopic]} />
             
           </div>
+                 
+        
           <div className={classes.MessageInputBox}>
-            <TextArea
+            <TextField
+            id="standard-full-width"
+            fullWidth
             className={classes.TextArea}
+            placeholder="type your message here"
               rows={1}
+              
               value={textValue}
               onChange={e => setTextValue(e.target.value)}
+              onKeyDown={e => {
+                //will only send a message if the text length is more than 0
+  
+                if(textValue.length > 0) {
+                
+                if (e.keyCode === 13) {     
+                  
+                 
+                  sendMessageAction({
+                    from: user,
+                    msg: textValue,
+                    topic: activeTopic
+                  });
+                  setTextValue("");
+                
+                }
+              } else {
+                
+                if( e.keyCode === 13) {
+                  alert("You need to send a message")
+                }
+                
+              }
+              }}
             />
-            <button
+            <Button
+            type="submit"
+             variant="contained"
              className={classes.button}
+             label="filled"
               onClick={() => {
-                sendMessageAction({
-                  from: user,
-                  msg: textValue,
-                  topic: activeTopic
-                });
-                setTextValue("");
+                if(textValue.length > 0) { 
+                  sendMessageAction({
+                    from: user,
+                    msg: textValue,
+                    topic: activeTopic
+                  });
+                  setTextValue("");
+
+                }
+                
               }}
             >
               Send
-            </button>
+            </Button>
           </div>
         </div>
       </div>
